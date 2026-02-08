@@ -24,28 +24,32 @@ body {
   text-align: center;
 }
 
-h1 {
+h1, p {
   color: white;
+}
+
+h1 {
   font-size: 40px;
 }
 
 p {
-  color: white;
-  font-size: 20px;
-  margin-top: 10px;
+  font-size: 22px;
+  margin: 10px 0;
+  opacity: 0;
 }
 
+/* Button */
 button {
-  padding: 12px 25px;
+  padding: 14px 28px;
   font-size: 18px;
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
-  margin-top: 20px;
   cursor: pointer;
   background: #ffcc00;
+  margin-top: 20px;
 }
 
-/* Falling chocolates */
+/* Chocolate rain */
 .choco {
   position: fixed;
   top: -50px;
@@ -72,7 +76,23 @@ button {
   100% { transform: translateY(-110vh); opacity: 0; }
 }
 
-/* GIF pop animation */
+/* Text fade in */
+.show {
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* GIF */
+#loveGif {
+  width: 260px;
+  border-radius: 20px;
+  margin-top: 20px;
+  display: none;
+}
+
 .pop {
   animation: popIn 0.8s ease forwards;
   transform: scale(0);
@@ -81,13 +101,6 @@ button {
 @keyframes popIn {
   to { transform: scale(1); }
 }
-
-#loveGif {
-  width: 260px;
-  border-radius: 20px;
-  margin-top: 25px;
-  display: none;
-}
 </style>
 </head>
 
@@ -95,42 +108,61 @@ button {
 
 <!-- First Page -->
 <div id="firstPage" class="page">
-  <h1>Happy Chocolate Day, Kiki 🍫💖</h1>
-  <p>You make my life sweeter every day.</p>
-  <p>Just like chocolate… I’m addicted to you 😋</p>
-
-  <button onclick="nextPage()">Open Surprise 🍫</button>
-  <button onclick="playMusic()">Play our song 🎵</button>
+  <h1>Happy Chocolate Day, Kiki 🍫</h1>
+  <p style="opacity:1;">I have something sweet for you…</p>
+  <button onclick="unwrap()">Unwrap it 🍫</button>
 </div>
 
 <!-- Final Page -->
 <div id="finalPage" class="page" style="display:none;">
-  <h1>For my sweetest Kiki 🍫💘</h1>
-  <p>You are my favorite chocolate…</p>
+  <p id="line1">Inside every chocolate…</p>
+  <p id="line2">there’s something sweet.</p>
+  <p id="line3">Inside my heart…</p>
+  <p id="line4">there’s only you, Kiki. 💘</p>
+
   <img id="loveGif" src="dudu.gif" alt="cute gif">
 </div>
 
 <audio id="music" loop>
-  <source src="anbe.mp3" type="audio/mpeg">
+  <source src="vaseegara.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function playMusic() {
-  document.getElementById("music").play().catch(() => {});
-}
-
-function nextPage() {
+function unwrap() {
   playMusic();
   document.getElementById("firstPage").style.display = "none";
   document.getElementById("finalPage").style.display = "flex";
 
+  showLines();
   startHearts();
+}
+
+function playMusic() {
+  document.getElementById("music").play().catch(() => {});
+}
+
+function showLines() {
+  setTimeout(() => {
+    document.getElementById("line1").classList.add("show");
+  }, 500);
+
+  setTimeout(() => {
+    document.getElementById("line2").classList.add("show");
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("line3").classList.add("show");
+  }, 3500);
+
+  setTimeout(() => {
+    document.getElementById("line4").classList.add("show");
+  }, 5000);
 
   setTimeout(() => {
     let gif = document.getElementById("loveGif");
     gif.style.display = "block";
     gif.classList.add("pop");
-  }, 600);
+  }, 6500);
 }
 
 /* Chocolate rain */
@@ -145,7 +177,7 @@ setInterval(() => {
   setTimeout(() => choco.remove(), 5000);
 }, 300);
 
-/* Hearts on final page */
+/* Hearts */
 function startHearts() {
   setInterval(() => {
     let heart = document.createElement("div");
