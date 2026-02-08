@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chocolate Day for Kiki 🍫</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #8B4513, #D2691E);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Center layout */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  color: white;
+  font-size: 40px;
+}
+
+p {
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border-radius: 20px;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+  background: #ffcc00;
+}
+
+/* Falling chocolates */
+.choco {
+  position: fixed;
+  top: -50px;
+  font-size: 25px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* Hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+/* GIF pop animation */
+.pop {
+  animation: popIn 0.8s ease forwards;
+  transform: scale(0);
+}
+
+@keyframes popIn {
+  to { transform: scale(1); }
+}
+
+#loveGif {
+  width: 260px;
+  border-radius: 20px;
+  margin-top: 25px;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- First Page -->
+<div id="firstPage" class="page">
+  <h1>Happy Chocolate Day, Kiki 🍫💖</h1>
+  <p>You make my life sweeter every day.</p>
+  <p>Just like chocolate… I’m addicted to you 😋</p>
+
+  <button onclick="nextPage()">Open Surprise 🍫</button>
+  <button onclick="playMusic()">Play our song 🎵</button>
+</div>
+
+<!-- Final Page -->
+<div id="finalPage" class="page" style="display:none;">
+  <h1>For my sweetest Kiki 🍫💘</h1>
+  <p>You are my favorite chocolate…</p>
+  <img id="loveGif" src="dudu.gif" alt="cute gif">
+</div>
+
+<audio id="music" loop>
+  <source src="anbe.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function playMusic() {
+  document.getElementById("music").play().catch(() => {});
+}
+
+function nextPage() {
+  playMusic();
+  document.getElementById("firstPage").style.display = "none";
+  document.getElementById("finalPage").style.display = "flex";
+
+  startHearts();
+
+  setTimeout(() => {
+    let gif = document.getElementById("loveGif");
+    gif.style.display = "block";
+    gif.classList.add("pop");
+  }, 600);
+}
+
+/* Chocolate rain */
+setInterval(() => {
+  let choco = document.createElement("div");
+  choco.className = "choco";
+  choco.innerHTML = "🍫";
+  choco.style.left = Math.random() * 100 + "vw";
+  choco.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(choco);
+
+  setTimeout(() => choco.remove(), 5000);
+}, 300);
+
+/* Hearts on final page */
+function startHearts() {
+  setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 15 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
